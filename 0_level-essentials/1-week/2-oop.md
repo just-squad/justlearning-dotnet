@@ -216,6 +216,166 @@ public class Car
 }
 ```
 
+### Primary constructor
+
+**Primary Constructors в C#** — это новая функциональность, появившаяся в C# 12 (ноябрь 2023 года, .NET 8). Они позволяют объявлять параметры конструктора непосредственно в объявлении класса, структуры или записи (record), упрощая код и уменьшая шаблонные конструкции.
+
+**Primary Constructors** — это инструмент для сокращения избыточного кода, особенно полезный в сценариях, где классы или структуры принимают параметры для инициализации и не требуют сложной логики. В веб-разработке их удобно применять для DTO, сервисов с DI и других компонентов с минимальной бизнес-логикой. Однако важно помнить об ограничениях и не использовать их там, где требуется явный контроль над конструктором (валидация, преобразования).
+
+Как появились?
+
+- **C# 9.0 (2020):** Primary constructors были введены для record, чтобы автоматически генерировать свойства на основе параметров конструктора.
+- **C# 12:** Функция расширена для классов и структур. Теперь их можно использовать в любых типах, но с нюансами (в отличие от record, где параметры автоматически становятся свойствами).
+
+#### Примеры использования
+
+1. **Классы**
+
+   Раньше для инициализации полей через конструктор нужно было писать больше кода:
+
+   ```csharp
+   // До C# 12
+   public class User
+   {
+       private readonly string _name;
+       private readonly int _age;
+
+       public User(string name, int age)
+       {
+           _name = name;
+           _age = age;
+       }
+
+       public string GetInfo() => $"{_name}, {_age}";
+   }
+   ```
+
+   С Primary Constructor:
+
+   ```csharp
+   // C# 12
+   public class User(string name, int age)
+   {
+       public string GetInfo() => $"{name}, {age}";
+   }
+   ```
+
+   - Параметры `name` и `age` доступны **всем методам класса**, но **не сохраняются автоматически в поля** (если не используются в методах/свойствах).
+   - Если нужно сохранить значения, можно создать свойства:
+
+   ```csharp
+   public class User(string name, int age)
+   {
+       public string Name { get; } = name;
+       public int Age { get; } = age;
+   }
+   ```
+
+1. **Структуры**
+
+   Аналогично классам:
+
+   ```csharp
+   public struct Point(int x, int y)
+   {
+       public int X => x;
+       public int Y => y;
+   }
+   ```
+
+1. **Record**
+
+   Для сравнения (работает с C# 9):
+
+   ```csharp
+   public record Person(string Name, int Age);
+   // Автоматически генерирует свойства Name и Age
+   ```
+
+#### Когда лучше использовать?
+
+- **DTO (Data Transfer Objects)**, модели данных, где требуется минимальная логика.
+- **Классы с зависимостями**, например, в ASP.NET Core при внедрении сервисов через DI:
+  
+  ```csharp
+  public class OrderService(ILogger<OrderService> logger, IOrderRepository repository)
+  {
+      public void ProcessOrder(Order order)
+      {
+          logger.LogInformation("Processing order...");
+          repository.Save(order);
+      }
+  }
+  ```
+
+- **Упрощение кода**, когда параметры конструктора используются напрямую в методах или свойствах.
+- **Структуры** для неизменяемых данных.
+
+#### Когда НЕ стоит использовать?
+
+- **Если нужна валидация параметров**:
+
+  ```csharp
+  // Плохо: нельзя добавить проверку в primary constructor
+  public class User(string name, int age)
+  {
+      public string Name { get; } = name ?? throw new ArgumentNullException(nameof(name));
+      public int Age { get; } = age >= 0 ? age : throw new ArgumentException("Age cannot be negative");
+  }
+
+  // Лучше использовать обычный конструктор
+  public class User
+  {
+      public User(string name, int age)
+      {
+          ArgumentNullException.ThrowIfNull(name);
+          if (age < 0) throw new ArgumentException("Age cannot be negative");
+          Name = name;
+          Age = age;
+      }
+  }
+  ```
+
+- **Если параметры не используются напрямую** в теле класса (компилятор выдаст предупреждение).
+- **При работе с legacy-кодом**, где важна явная читаемость.
+
+#### Особенности
+
+- Параметры primary constructor **неявно становятся `private` полями**, но только если они используются в теле класса.
+- В классах они **не создают свойства автоматически** (в отличие от `record`).
+- Можно комбинировать с обычными конструкторами, но это усложняет код.
+
+#### Практика для веб-разработки
+
+В контексте веб-разработки:
+
+- **Модели данных** (например, для API):
+
+  ```csharp
+  public class Product(int id, string name, decimal price)
+  {
+      public int Id { get; } = id;
+      public string Name { get; } = name;
+      public decimal Price { get; } = price;
+  }
+  ```
+
+- **Сервисы с DI**:
+
+  ```csharp
+  public class AuthService(ILogger<AuthService> logger, IUserRepository userRepo)
+  {
+      public bool Login(string email, string password)
+      {
+          logger.LogInformation("Login attempt for {Email}", email);
+          var user = userRepo.GetByEmail(email);
+          return user?.Password == password;
+      }
+  }
+  ```
+
+- **Минимизация шаблонного кода** в контроллерах, middleware, helpers.
+
 ## Инкапсуляция
 
 Инкапсуляция - это принцип, согласно которому детали реализации объекта скрыты от внешнего мира, и доступ к данным объекта осуществляется только через его методы.
