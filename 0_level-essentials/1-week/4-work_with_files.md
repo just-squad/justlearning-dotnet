@@ -4,7 +4,7 @@
 
 Работа с файлами — важная часть многих приложений. В C# для этого предоставляются мощные инструменты в пространстве имен `System.IO`.
 
-## 1. Базовые операции с файлами
+## **Базовые операции с файлами**
 
 ### Проверка существования файла
 
@@ -41,7 +41,9 @@ File.Copy(source, dest); // Копирование
 File.Move(source, @"C:\example\new_location.txt"); // Перемещение
 ```
 
-## 2. Работа с текстовыми файлами
+---
+
+## **Работа с текстовыми файлами**
 
 ### Чтение файла
 
@@ -70,7 +72,9 @@ List<string> newLines = new List<string> { "Первая строка", "Вто�
 File.WriteAllLines(path, newLines);
 ```
 
-## 3. Работа с бинарными файлами
+---
+
+## **Работа с бинарными файлами**
 
 ```csharp
 byte[] data = { 0x48, 0x65, 0x6C, 0x6C, 0x6F }; // "Hello" в ASCII
@@ -82,7 +86,9 @@ File.WriteAllBytes(@"C:\example\binary.bin", data);
 byte[] readData = File.ReadAllBytes(@"C:\example\binary.bin");
 ```
 
-## 4. Использование потоков (Streams)
+---
+
+## **Использование потоков (Streams)**
 
 ### StreamReader/StreamWriter
 
@@ -118,7 +124,9 @@ using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.ReadWrite)
 }
 ```
 
-## 5. Обработка исключений и подводные камни
+---
+
+## **Обработка исключений и подводные камни**
 
 ### Распространенные исключения
 
@@ -158,7 +166,9 @@ catch (IOException ex)
 string safePath = Path.Combine("folder", "subfolder", "file.txt");
 ```
 
-## 6. Производительность и лучшие практики
+---
+
+## **Производительность и лучшие практики**
 
 ### Лайфхаки для оптимизации
 
@@ -211,7 +221,9 @@ if (fileInfo.Exists)
 }
 ```
 
-## 7. Расширенные возможности
+---
+
+## **Расширенные возможности**
 
 ### Временные файлы
 
@@ -244,7 +256,9 @@ File.SetAttributes(path, FileAttributes.Hidden | FileAttributes.ReadOnly);
 File.SetCreationTime(path, DateTime.Now.AddDays(-1));
 ```
 
-## Заключение: Главные правила работы с файлами
+---
+
+## **Заключение: Главные правила работы с файлами**
 
 1. Всегда используй `using` для гарантированного освобождения ресурсов
 2. Обрабатывай все возможные исключения

@@ -2,6 +2,8 @@
 
 На примере "Системы Умного Дома" — представь, что gRPC это нервная система твоего дома, где устройства быстро обмениваются сообщениями\*\*
 
+---
+
 ## **Основы gRPC**
 
 **gRPC (Google Remote Procedure Call)** — современный фреймворк для удаленного вызова процедур (RPC).
@@ -24,6 +26,8 @@
 - gRPC = Проводная связь между устройствами
 - Protobuf = Универсальный язык общения
 
+---
+
 ## **Архитектура gRPC**
 
 ```mermaid
@@ -41,6 +45,8 @@ E --> C
 2. **Сгенерированный код** — клиентские и серверные классы
 3. **Канал (Channel)** — виртуальное соединение между клиентом и сервером
 4. **Стуб (Stub)** — клиентский объект для вызовов RPC
+
+---
 
 ## **Protocol Buffers (Protobuf)**
 
@@ -317,6 +323,8 @@ public class HomeController : Controller
 }
 ```
 
+---
+
 ## **Типы RPC в Деталях**
 
 1. **Унарный (Unary RPC)**
@@ -357,6 +365,8 @@ public class HomeController : Controller
    Server-->>Client: Ответ 2
    ```
 
+---
+
 ## **Обработка Ошибок**
 
 **Статусные коды gRPC (аналоги HTTP):**
@@ -385,6 +395,8 @@ catch (RpcException ex)
     Console.WriteLine($"Ошибка gRPC: {ex.Status.Detail}");
 }
 ```
+
+---
 
 ## **Метаданные и Deadline**
 
@@ -416,6 +428,8 @@ if (context.Deadline < DateTime.UtcNow)
     throw new RpcException(new Status(StatusCode.DeadlineExceeded, "Timeout"));
 }
 ```
+
+---
 
 ## **Аутентификация и Безопасность**
 
@@ -449,6 +463,8 @@ if (context.Deadline < DateTime.UtcNow)
        Credentials = ChannelCredentials.Create(new SslCredentials(), credentials)
    });
    ```
+
+---
 
 ## **Оптимизация Производительности**
 
@@ -493,6 +509,8 @@ if (context.Deadline < DateTime.UtcNow)
 | **Инструменты**        | Автогенерация кода          | Swagger/Postman               |
 | **Идеальные сценарии** | Микросервисы, IoT, стриминг | Публичные API, веб-приложения |
 
+---
+
 ## **gRPC-Web: gRPC для Браузеров**
 
 **Архитектура:**
@@ -525,6 +543,8 @@ client.getDeviceStatus(request, {}, (err, response) => {
 });
 ```
 
+---
+
 ## **Лучшие Практики**
 
 1. **Версионирование сервисов:**
@@ -555,6 +575,8 @@ client.getDeviceStatus(request, {}, (err, response) => {
    - Prometheus + Grafana для метрик
    - OpenTelemetry для трассировки
 
+---
+
 ## **Реальный Пример: Управление Освещением**
 
 **Сценарий:**
@@ -577,6 +599,8 @@ Client->>Server: LiveControl() [бинар. канал]
 Client->>Server: ControlRequest{value: 75}
 Server-->>Client: Device{value: 75}
 ```
+
+---
 
 ## **Отладка и Тестирование**
 
