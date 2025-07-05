@@ -1,4 +1,4 @@
-# **4. Логирование в Elasticsearch + Kibana**
+# **Логирование в Elasticsearch + Kibana**
 
 **Цель**: Агрегировать и искать логи из распределенных систем.
 
@@ -13,12 +13,12 @@
      environment:
        - discovery.type=single-node
      ports:
-       - '9200:9200'
+       - "9200:9200"
 
    kibana:
      image: kibana:8.5.0
      ports:
-       - '5601:5601'
+       - "5601:5601"
    ```
 
 2. Установите пакет для записи логов в Elasticsearch:

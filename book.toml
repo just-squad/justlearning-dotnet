@@ -1,0 +1,5 @@
+[book]
+authors = ["nguscharin"]
+language = "ru"
+src = "src"
+title = "JustLearning DotNET"

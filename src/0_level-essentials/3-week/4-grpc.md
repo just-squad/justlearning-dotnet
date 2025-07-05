@@ -1,4 +1,4 @@
-# Протокол gRPC
+# **Протокол gRPC**
 
 На примере "Системы Умного Дома" — представь, что gRPC это нервная система твоего дома, где устройства быстро обмениваются сообщениями\*\*
 
@@ -532,11 +532,11 @@ app.MapGrpcService<SmartHomeService>().EnableGrpcWeb();
 **Клиент в JavaScript:**
 
 ```javascript
-import { SmartHomeServiceClient } from './gen/smart_home_grpc_web_pb';
-const client = new SmartHomeServiceClient('https://localhost:5001');
+import { SmartHomeServiceClient } from "./gen/smart_home_grpc_web_pb";
+const client = new SmartHomeServiceClient("https://localhost:5001");
 
 const request = new DeviceRequest();
-request.setDeviceId('light-01');
+request.setDeviceId("light-01");
 
 client.getDeviceStatus(request, {}, (err, response) => {
   console.log(response.getStatus());
@@ -555,7 +555,6 @@ client.getDeviceStatus(request, {}, (err, response) => {
    ```
 
 2. **Разделение .proto файлов:**
-
    - `devices.proto`
    - `security.proto`
    - `automation.proto`
@@ -605,7 +604,6 @@ Server-->>Client: Device{value: 75}
 ## **Отладка и Тестирование**
 
 1. **Инструменты:**
-
    - **BloomRPC** (GUI-клиент для gRPC)
    - **grpcurl** (аналог curl для gRPC):
 
@@ -654,7 +652,7 @@ Server-->>Client: Device{value: 75}
 
 ---
 
-**Итог:**  
+**Итог:**
 gRPC — мощный инструмент для высокопроизводительных систем, где важны:
 
 - Низкие задержки
