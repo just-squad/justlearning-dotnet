@@ -31,7 +31,7 @@
     - [Entity Framework Core (ORM)](./0_level-essentials/4-week/2-ef_core.md)
     - [Работа с PostgreSQL/SQL Server](./0_level-essentials/4-week/3-pg_mssql.md)
     - [Практика](./0_level-essentials/4-week/4-practice.md)
-    - [Советы](./0_level-essentials/5-week/0-advice.md)
+    - [Советы](./0_level-essentials/4-week/0-advice.md)
   - [Неделя 5]()
     - [Фильтры (Filters)](./0_level-essentials/5-week/1-asp_net_filters.md)
     - [Валидация моделей](./0_level-essentials/5-week/2-model_validation.md)
